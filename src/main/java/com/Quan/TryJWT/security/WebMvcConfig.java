@@ -13,23 +13,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	@Bean
-	public MultipartConfigElement multipartConfigElement() {
-		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setMaxFileSize(DataSize.ofBytes(100000000L));
-		factory.setMaxRequestSize(DataSize.ofBytes(100000000L));
-		return factory.createMultipartConfig();
-	}
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/**")
-				.addResourceLocations("classpath:/images/");
-	}
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		// registry.addInterceptor(new AirJ18Interceptor())
-		// .addPathPatterns("/api/booking/**");
-	}
+//	@Bean
+//	public MultipartConfigElement multipartConfigElement() {
+//		MultipartConfigFactory factory = new MultipartConfigFactory();
+//		factory.setMaxFileSize(DataSize.ofBytes(100000000L));
+//		factory.setMaxRequestSize(DataSize.ofBytes(100000000L));
+//		return factory.createMultipartConfig();
+//	}
+//
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/**")
+//				.addResourceLocations("classpath:/images/");
+//	}
+//
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		// registry.addInterceptor(new AirJ18Interceptor())
+//		// .addPathPatterns("/api/booking/**");
+//	}
 } 
