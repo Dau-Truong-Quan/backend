@@ -110,7 +110,7 @@ public class ManageUserController {
 				return AppUtils.returnJS(HttpStatus.BAD_REQUEST,
 						"User registered failed! " + "Email is already in use!", null);
 			}
-
+			user.setStatus(true);
 			userService.saveUser(user);
 			return AppUtils.returnJS(HttpStatus.OK, "User registered successfully!", null);
 		}
