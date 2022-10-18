@@ -48,9 +48,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	String[] staticResources  =  {
+	        "/css/**",
+	        "/images/**",
+	        "/fonts/**",
+	        "/scripts/**",
+	    };
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
+		http.authorizeRequests()
+		.antMatchers(staticResources).permitAll()
+		.antMatchers("/",
+                "/favicon.ico",
+                "/**/*.png",
+                "/**/*.gif",
+                "/**/*.svg",
+                "/**/*.jpg",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js")
+        	.permitAll()
+			.antMatchers("/products/**").permitAll()
+			.antMatchers("/users/**").permitAll()
+        	.and()
 			// authenticationEntryPoint nhận lỗi nếu bên AuthEntryPointJwt trả lỗi về, lỗi xác thực thất bại (AuthEntryPointJwt extend authenticationEntryPoint)
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and() // AuthenticationEntryPoint will catch authentication error.
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -67,17 +87,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/users/**").permitAll()
 			.antMatchers("/api/address/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
-			.antMatchers("/products/**").permitAll()
-			.antMatchers("/users/**").permitAll()
 			.antMatchers("/api/admin/**").permitAll()
 			.antMatchers("/api/verify/**").permitAll()
-
+			
 			.anyRequest().authenticated();
-		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class).cors().and().csrf().disable();
 	}
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui.html", "/webjars/**", "/api-docs/**");
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/**", "/swagger-resources/**",  "/swagger-ui.html", "/webjars/**", "/api-docs/**", "/images/**");
     }
 }

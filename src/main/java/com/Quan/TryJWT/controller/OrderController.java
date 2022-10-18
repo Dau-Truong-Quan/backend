@@ -247,20 +247,20 @@ public class OrderController {
 		List<Cart> listCart = cartService.getCartByUser(user);
 		List<OrderDetail> listOrderDetail = new ArrayList<OrderDetail>();
 				
-				for(Cart s : listCart){
-					listOrderDetail.add(new OrderDetail(s.getProduct(),order, s.getQuantity(),s.getProduct().getPrice() ));
-					
-					user.getCarts().remove(s);
-					
-					Product product = productService.findById(s.getProduct().getProductId());
-					product.setQuantity(product.getQuantity() - s.getQuantity() );
-					product.getCarts().remove(s);
-					
-					userService.saveUser(user);
-					productService.addProduct(product);
-					
-					cartService.deleteCart(s.getCartId());		
-				}
+//				for(Cart s : listCart){
+//					listOrderDetail.add(new OrderDetail(s.getProduct(),order, s.getQuantity(),s.getProduct().getPrice() ));
+//					
+//					user.getCarts().remove(s);
+//					
+//					Product product = productService.findById(s.getProduct().getProductId());
+//					product.setQuantity(product.getQuantity() - s.getQuantity() );
+//					product.getCarts().remove(s);
+//					
+//					userService.saveUser(user);
+//					productService.addProduct(product);
+//					
+//					cartService.deleteCart(s.getCartId());		
+//				}
 		orderDetailService.saveListOrderDetail(listOrderDetail);
 		
 		
