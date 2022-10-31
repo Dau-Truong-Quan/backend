@@ -51,7 +51,7 @@ public class FileUploadController {
 	}
 
 	public String saveFile2(String fileName, MultipartFile file, String folder) {
-		Path uploadDirectory = Paths.get("src\\main\\resources\\images\\" + folder);
+		Path uploadDirectory = Paths.get("src\\main\\resources\\static\\images\\" + folder);
 		fileName = StringUtils.delete(fileName, " ");
 		
 		try(InputStream inputStream = file.getInputStream()) {
@@ -96,7 +96,7 @@ public class FileUploadController {
 	public ResponseEntity<?> postUserImage(@RequestParam("file") MultipartFile file) {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		
-		String newFileName = saveFile(fileName, file, "users");
+		String newFileName = saveFile2(fileName, file, "users");
 		
 		return ResponseEntity.ok(newFileName);
 	}

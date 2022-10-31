@@ -51,6 +51,7 @@ public class ManageUserController {
 	@Autowired
 	PasswordEncoder encoder;
 
+	
 	@ApiOperation(value = "Lấy tất cả danh sách user")
 	@GetMapping("/all")
 	public ResponseEntity<List<User>> getAllUser() {
@@ -62,10 +63,10 @@ public class ManageUserController {
 	}
 
 	@PutMapping("/add")
-	public ResponseEntity<?> addNew(@Valid @RequestBody User user, BindingResult bindingResult) {
+	public ResponseEntity<?> addNew(@Valid @RequestBody User user) {
 		
-		if (bindingResult.hasErrors())
-			return AppUtils.returnJS(HttpStatus.BAD_REQUEST, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
+//		if (bindingResult.hasErrors())
+//			return AppUtils.returnJS(HttpStatus.BAD_REQUEST, bindingResult.getAllErrors().get(0).getDefaultMessage(), null);
 
 		Optional<User> user2 = userRepository.findById(user.getId());
 
@@ -133,6 +134,8 @@ public class ManageUserController {
 		if (user == null) {
 			return AppUtils.returnJS(HttpStatus.BAD_REQUEST, "User not found!", null);
 		}
+		user.getRoles().remove(user.getRoles().iterator().next());
+		userService.addUser(user);
 		int status = userService.deleteUser(user);
 		if (status == 0) {
 			return AppUtils.returnJS(HttpStatus.BAD_REQUEST, "This user placed an order!", null);
